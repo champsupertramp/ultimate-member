@@ -1,12 +1,12 @@
 {
    "name": "ultimatemember/core",
-   "description": "Great package to extend and build complex WordPress site with Ultimate Member core",
+   "description": "Ultimate Member Wordpress Plugin core package",
    "type": "library",
    "license": "MIT",
    "authors": [
       {
          "name": "Champ Camba",
-         "email": "darkerknees@gmail.com"
+         "email": "heychampsupertramp@gmail.com"
       }
    ],
    "homepage": "https://champ.ninja",
