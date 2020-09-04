@@ -1,0 +1,21 @@
+{
+   "name": "ultimatemember/core",
+   "description": "Ultimate Member Wordpress Plugin core package",
+   "type": "library",
+   "license": "GPL",
+   "authors": [
+      {
+         "name": "Champ Camba",
+         "email": "heychampsupertramp@gmail.com"
+      }
+   ],
+   "minimum-stability": "dev",
+   "require": {
+      "php": ">=7.1.0"
+   },
+   "autoload": {
+      "psr-0": {
+         "UltimateMember": "src/"
+      }
+   }
+}
