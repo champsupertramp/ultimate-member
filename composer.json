@@ -9,6 +9,17 @@
          "email": "heychampsupertramp@gmail.com"
       }
    ],
+   "homepage": "https://champ.ninja",
+   "support": {
+      "issues": "https://github.com/champsupertramp/ultimate-member/issues",
+      "source": "https://github.com/champsupertramp/ultimate-member/framework"
+   },
+   "keywords": [
+      "wordpress",
+      "ultimate-member",
+      "plugin",
+      "package"
+   ],
    "minimum-stability": "dev",
    "require": {
       "php": ">=7.1.0"
