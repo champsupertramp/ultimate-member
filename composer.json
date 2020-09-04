@@ -26,12 +26,7 @@
    },
    "autoload": {
       "psr-4": {
-         "ultimatemember\\": "core/src/"
-      }
-   },
-   "autoload-dev": {
-      "psr-4": {
-         "ultimatemember\\tests\\": "tests/"
+         "UltimateMember\\Core\\": ""
       }
    }
 }
