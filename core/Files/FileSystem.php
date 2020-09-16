@@ -70,6 +70,22 @@ class FileSystem {
             
             foreach ($_FILES as $file) {
 
+                $uuid           = $_REQUEST['uuid_filename'];
+                $image_type     = wp_check_filetype($_REQUEST['resumableFilename'] );
+                $ext            = strtolower( trim( $image_type['ext'], ' \/.' ) );
+                $type           = $image_type['type'];
+                $fileName       = "{$this->getFilePrefix()}_{$uuid}.{$ext}";
+                $_REQUEST['newFileName'] = UM()->uploader()->get_upload_base_url() . $this->getBaseCustomDir() . DIRECTORY_SEPARATOR . $fileName;
+                
+                $core_upload_allowed_types = apply_filters("um_core_upload_{$this->getFilePrefix()}__allowed_mimes", get_allowed_mime_types() );
+                $core_upload_allowed_types = apply_filters("um_core_upload_allowed_mime_types", $core_upload_allowed_types );
+                
+                if( ! in_array( $type, $core_upload_allowed_types, true ) ){
+                    return new \WP_REST_Response([
+                        "reason" => "invalid file uploaded",
+                        "filter" => "um_core_upload_{$this->getFilePrefix()}__allowed_mimes"
+                    ] , 415);
+                }
                 // check the error status
                 if ($file['error'] != 0) {
                     continue;
@@ -87,12 +103,7 @@ class FileSystem {
                     }
                 }
 
-                $uuid           = $_REQUEST['uuid_filename'];
-                $image_type     = wp_check_filetype($_REQUEST['resumableFilename'] );
-                $ext            = strtolower( trim( $image_type['ext'], ' \/.' ) );
-                $fileName       = "{$this->getFilePrefix()}_{$uuid}.{$ext}";
-                $_REQUEST['newFileName'] = UM()->uploader()->get_upload_base_url() . $this->getBaseCustomDir() . DIRECTORY_SEPARATOR . $fileName;
-               
+              
                 // wp-content/uploads/ultimatemember/tmp/um-user-events/<temp dir destination>/
                 $dest_file = $temp_dir . DIRECTORY_SEPARATOR .$_REQUEST['resumableFilename'] .'.part'. $_REQUEST['resumableChunkNumber'];
                   
@@ -221,7 +232,7 @@ class FileSystem {
             // concurrent chunks uploads) and than delete it
             if( ! is_dir( $temp_dir_unused ) ){
                 //rename( $temp_dir, $temp_dir_unused );
-                $wpfd = new WPFDirect(FALSE);
+                $wpfd = new WPFDirect(False);
                 $wpfd->rmdir($temp_dir, true);
                 
                 $this->isCompleted = true;

@@ -26,13 +26,21 @@ class Uploader {
         ];
     }
 
-
-    function process(){
+    /**
+     * Process upload
+     */
+    function process(\WP_REST_Request $request ){
+        
+        $baseDir = $request->get_param('baseDir');
+        $prefix = $request->get_param('prefix');
+        
+        $user_id = apply_filters("um_upload_{$prefix}__user_id", get_current_user_id() );
         
         $fs = new UM_FileSystem();
-        $fs->setBaseDir( "um-user-events" );
-        $fs->setUserID( get_current_user_id() );
-        $fs->setFilePrefix( "events_photo" );
+        $fs->setUserID( $user_id );
+        $fs->setBaseDir( $baseDir  );
+        $fs->setFilePrefix( $prefix );
+
         return $response = $fs->process();
       
        

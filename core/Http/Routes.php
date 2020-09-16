@@ -24,7 +24,7 @@ class Routes{
             register_rest_route( 'um-core/api/v1', 'users/', array(
                 'methods' => 'GET',
                 'callback' => array("UltimateMember\\Http\\UserController", "multiple" ),
-                 'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
+                'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
             ) );
 
 
@@ -47,6 +47,39 @@ class Routes{
                     'baseDir'
 
                 ],
+            ) );
+            
+            /**
+             * Data Query: SELECT, UPDATE, DELETE, INSERT
+             */
+            register_rest_route( 'um-core/api/v1', 'collections/', array(
+                'methods' => 'GET',
+                'callback' => array("UltimateMember\\Http\\DataController", "handleGet" ),
+                'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
+            ) );
+
+            register_rest_route( 'um-core/api/v1', 'collections/', array(
+                'methods' => 'POST',
+                'callback' => array("UltimateMember\\Http\\DataController", "handlePost" ),
+                'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
+            ) );
+
+            register_rest_route( 'um-core/api/v1', 'collections/', array(
+                'methods' => 'PUT',
+                'callback' => array("UltimateMember\\Http\\DataController", "handlePut" ),
+                'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
+            ) );
+
+            register_rest_route( 'um-core/api/v1', 'collections/', array(
+                'methods' => 'PATCH',
+                'callback' => array("UltimateMember\\Http\\DataController", "handlePatch" ),
+                'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
+            ) );
+
+            register_rest_route( 'um-core/api/v1', 'collections/', array(
+                'methods' => "DELETE",
+                'callback' => array("UltimateMember\\Http\\DataController", "handleDelete" ),
+                 'permission_callback' => array("UltimateMember\\Http\\Validate", "nonce" ),
             ) );
             
         } );            

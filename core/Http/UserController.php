@@ -13,9 +13,12 @@ class UserController
      */
     function single( \WP_REST_Request $request   ){
         
-        $id = $request->get_param('id');
-
-        $user = User::where("ID", "=", $id )->first();
+       
+        if( $request->get_param('id') ) {
+            $user = User::where("ID", "=", $request->get_param('id') )->first();
+        }elseif( $request->get_param('name') ){
+            $user = User::where("first_name", "=",  $request->get_param('name' ) )->first();
+        }
         
         return $user;
       
@@ -26,11 +29,11 @@ class UserController
      */
     function multiple( \WP_REST_Request $request   ){
        
-        $id = $request->get_param('keyword');
+        $keyword = $request->get_param('keyword');
         $includes = $request->get_param('includes');
         $callback_name = $request->get_param("callback_name");
  
-        $users = Usermeta::where("meta_value", "LIKE", $id .'%' )
+        $users = Usermeta::where("meta_value", "LIKE", $keyword .'%' )
             ->groupBy("user_id")
             ->limit(20)
             ->get('user_id');

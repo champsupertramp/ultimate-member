@@ -11,11 +11,14 @@ class Users{
         $user_ids = $collection->pluck('user_id');
         
         $arr_user = [];
+
+        $current_user_id = get_current_user_id();
         foreach( $user_ids as $uid ){
 
             um_fetch_user( $uid );
             $arr_data = [];
 
+           
             foreach( $arr_keys as $key ){
 
                 if( $key == 'avatar' ) 
@@ -24,6 +27,9 @@ class Users{
 
                 $arr_data[ $key ] = um_user( $key );
             }
+
+            $arr_data['owner'] = $current_user_id == $uid ?:false;
+           
             $arr_user[  ] = $arr_data;
         }
 
