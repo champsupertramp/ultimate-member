@@ -234,6 +234,8 @@ class FileSystem {
                 //rename( $temp_dir, $temp_dir_unused );
                 $wpfd = new WPFDirect(False);
                 $wpfd->rmdir($temp_dir, true);
+              
+                do_action("um_core_modify_uploaded_file__{$this->getFilePrefix()}", $this->fileName );
                 
                 $this->isCompleted = true;
                 

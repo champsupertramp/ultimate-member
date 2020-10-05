@@ -3,6 +3,24 @@ namespace UltimateMember\Collections;
 
 class Users{
 
+    protected static $user_id = null;
+
+    function __construct(){
+        $this->user_id = get_current_user_id();
+    }
+
+    function id(){
+        if( ! self::$user_id )  self::$user_id = get_current_user_id();
+       return self::$user_id;
+    }
+
+    function getData( $key ){
+
+        um_fetch_user( self::$user_id );
+
+        return um_user( $key );
+    }
+
     /**
      * Includes related data to the user
      */
@@ -36,7 +54,10 @@ class Users{
         return $arr_user;
     }
 
-    function avatar( $uid ){
+    function avatar( $uid = '' ){
+        if( empty( $uid ) ){
+            $uid = self::$user_id;
+        }
 
         return um_get_avatar_url( get_avatar( $uid, 40 ) );
     }

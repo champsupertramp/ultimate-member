@@ -42,9 +42,7 @@ class Uploader {
         $fs->setFilePrefix( $prefix );
 
         return $response = $fs->process();
-      
-       
-         
+          
     }
 
 }

@@ -2,7 +2,8 @@
 namespace UltimateMember\Http;
 use Illuminate\Http\Request;
 use Respect\Validation\Validator as Validator;
-use UltimateMember\Http\DataQuery as UM_DataQuery;
+use UltimateMember\Http\DataQueryInsert as UM_DataQueryInsert;
+use UltimateMember\Http\DataQueryGet as UM_DataQueryGet;
  
 
 class DataController
@@ -17,15 +18,7 @@ class DataController
        $id = $request->get_param('id');
        $data = apply_filters("um_data_query_get__{$id}", json_decode( $request->get_param('data') ), new Validator  );
 
-       if( isset( $data['has_errors'] ) && $data['has_errors'] > 0 ){
-           return $data;
-       }
-
-       $result = new UM_DataQuery( );
-       $result->insert( $data  );
-       
-
-       return $result->getResults();
+       return $data;
 
 
     }
@@ -39,15 +32,14 @@ class DataController
         $data = apply_filters("um_data_query_post__{$id}", json_decode( $request->get_param('data') ), new Validator );
         
         if( isset( $data['has_errors'] ) && $data['has_errors'] > 0 ){
+           // unset( $data['main'] );
             return $data;
         }
  
-        $result = new UM_DataQuery;
+        $result = new UM_DataQueryInsert;
+        
         return $result->insert( $data  );
         
- 
-        return $result->getIDs();
-
  
     }
 
